@@ -3,8 +3,50 @@
 # load scripting addition
 sudo yabai --load-sa
 
-# layout
+# Layout
+
 yabai -m config layout bsp
 
-# window modifications
+# Gaps and Padding
+
+# Padding: space between windows and screen edges
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+
+# Gaps: space between windows
+yabai -m config window_gap     10
+
+# Window Appearance
+
+# Window placement
 yabai -m config window_placement second_child
+
+# Window opacity
+yabai -m config window_opacity on
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.9
+
+# Window shadows
+yabai -m config window_shadow float
+
+# Mouse
+
+# Mouse follows focus
+yabai -m config mouse_follows_focus off
+
+# Focus follows mouse
+yabai -m config focus_follows_mouse off
+
+# Modifier for moving windows (alt + left click drag)
+yabai -m config mouse_modifier alt
+
+# Action on modifier + left click drag
+yabai -m config mouse_action1 move
+
+# Action on modifier + right click drag
+yabai -m config mouse_action2 resize
+
+# Where to place mouse when switching focus
+yabai -m config mouse_drop_action swap
