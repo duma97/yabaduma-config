@@ -3,7 +3,13 @@
 # Application Launches
 
 # Terminal
-alt - return : open -na /System/Applications/Utilities/Terminal.app
+alt - q : open -na /System/Applications/Utilities/Terminal.app
+
+# Browser
+alt - b : open -a /Applications/Firefox.app
+
+# Code Editor
+alt - c : open -na /Applications/Visual\ Studio\ Code.app
 
 # Window Management
 
