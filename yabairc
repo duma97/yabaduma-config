@@ -12,7 +12,7 @@ yabai -m config layout bsp
 # Padding: space between windows and screen edges
 yabai -m config top_padding    10
 yabai -m config bottom_padding 10
-yabai -m config left_padding   10
+yabai -m config left_padding   1
 yabai -m config right_padding  10
 
 # Gaps: space between windows
@@ -50,3 +50,19 @@ yabai -m config mouse_action2 resize
 
 # Where to place mouse when switching focus
 yabai -m config mouse_drop_action swap
+
+# Window Rules
+
+# System apps that should float
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+
+# Preference/Settings windows
+yabai -m rule --add title="Preferences$" manage=off
+yabai -m rule --add title="Settings$" manage=off
+
+# Auto-restart signal
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
