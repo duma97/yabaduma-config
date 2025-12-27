@@ -1,88 +1,62 @@
-# YabaDuma Config (In Progress).
+# YabaDuma Config
 
-## Tested on Macbook Air M4 with MacOS 26.2 Tahoe.
+My macOS tiling WM setup. Yabai + pywal theming.
 
-### Yabai WM + SKHD Keyboard Shortcuts.
+**Tested on MacBook Air M4, macOS 26.2 Tahoe.**
 
-#### **[Keybinds.md](Keybinds.md)** - Complete keybind guide.
+## What's in here
 
-### Visual & UX
-- Minimal gaps 10px
-- Window opacity (active: 1.0, inactive: 0.9)
-- **JankyBorders** - Dynamic window borders with pywal integration
-  - Active: Gradient from pywal colors (color6 → color4)
-  - Inactive: Semi-transparent background color
-  - Width: 3px, rounded corners
-  - Auto-updates with wallpaper changes
-- No window animations (macOS limitation)
-- **Pywal integration** - Dynamic colors from wallpaper
-  - Borders automatically match wallpaper colors
-  - SketchyBar color theming
-  - Easy theme switching with `reload-theme` command
+- **Yabai** - tiling WM (BSP layout, 10px gaps)
+- **SKHD** - keyboard shortcuts (see [Keybinds.md](Keybinds.md))
+- **JankyBorders** - window borders that pull colors from pywal
+- **SketchyBar** - status bar (workspaces, clock, volume, battery, bluetooth)
+- **Pywal** - generates color scheme from your wallpaper
 
-### Input
-- 4-finger MacOS gestures for workspace switch
+Window opacity: active 1.0, inactive 0.9. No animations (macOS doesn't support it through yabai).
 
----
+4-finger gestures work for switching workspaces.
 
-## Components
+## Dependencies
 
-- **yabai** - Tiling window manager with scripting addition
-- **skhd** - Hotkey daemon for keyboard shortcuts
-- **borders** (JankyBorders) - Window border system with gradient support
-- **pywal** - Dynamic color scheme generator from wallpapers
-- **sketchybar** - Status bar with pywal theming
+| Tool | Purpose | Install Command |
+|------|---------|-----------------|
+| yabai | Tiling window manager | `brew install koekeishiya/formulae/yabai` |
+| skhd | Hotkey daemon | `brew install koekeishiya/formulae/skhd` |
+| borders | Window borders | `brew install FelixKratz/formulae/borders` |
+| sketchybar | Status bar | `brew install FelixKratz/formulae/sketchybar` |
+| pywal | Color scheme generator | `pip3 install pywal` |
 
----
+**Optional:** `blueutil` for bluetooth status, `kitty` terminal.
 
-## Installation Guide
+**Font:** Hack Nerd Font for icons - `brew install --cask font-hack-nerd-font`
 
-### Prerequisites
+## Installation
+
 ```bash
-# Install Homebrew if not already installed
+# Homebrew (if you don't have it)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Add FelixKratz tap for borders
+# Taps
+brew tap koekeishiya/formulae
 brew tap FelixKratz/formulae
-```
 
-### Install Components
-```bash
-# Install yabai and skhd
-brew install koekeishiya/formulae/yabai
-brew install koekeishiya/formulae/skhd
-
-# Install borders
-brew install borders
-
-# Install pywal (Python package)
+# Install everything
+brew install yabai skhd borders sketchybar
 pip3 install pywal
 
-# Install sketchybar
-brew install sketchybar
-```
+# Clone and link
+git clone https://github.com/duma799/yabaduma-config.git ~/projects/yabaduma-config
+cd ~/projects/yabaduma-config
 
-### Setup
-```bash
-# Clone this config
-git clone https://github.com/duma799/yabaduma-config.git ~/.config/yabaduma-config
+ln -sf ~/projects/yabaduma-config/yabairc ~/.yabairc
+ln -sf ~/projects/yabaduma-config/skhdrc ~/.skhdrc
+ln -sf ~/projects/yabaduma-config/bordersrc ~/.config/borders/bordersrc
+ln -sf ~/projects/yabaduma-config/sketchybar ~/.config/sketchybar
 
-# Link configs
-ln -s ~/.config/yabaduma-config/yabairc ~/.yabairc
-ln -s ~/.config/yabaduma-config/skhdrc ~/.skhdrc
-
-# Create borders config directory and link
-mkdir -p ~/.config/borders
-ln -s ~/.config/yabaduma-config/bordersrc ~/.config/borders/bordersrc
-
-# Link sketchybar config
-ln -s ~/.config/yabaduma-config/sketchybar ~/.config/sketchybar
-
-# Add reload-theme command to PATH
+# reload-theme command
 mkdir -p ~/.local/bin
-ln -sf ~/.config/yabaduma-config/reload-theme.py ~/.local/bin/reload-theme
-
-# Ensure ~/.local/bin is in your PATH (add to ~/.zshrc if needed)
+ln -sf ~/projects/yabaduma-config/reload-theme.py ~/.local/bin/reload-theme
+chmod +x ~/projects/yabaduma-config/reload-theme.py
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 # Start services
@@ -92,55 +66,59 @@ brew services start borders
 brew services start sketchybar
 ```
 
-### Post-Installation
-- Disable SIP (System Integrity Protection) partially for yabai scripting addition
-- Configure accessibility permissions for yabai and skhd
-- Set initial wallpaper with pywal: `wal -i /path/to/wallpaper.jpg`
-- Reload theme: `reload-theme`
-- Restart services after configuration changes
+After install:
+- Disable SIP partially for yabai scripting addition ([yabai wiki](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection))
+- Grant accessibility permissions to yabai and skhd (System Settings → Privacy & Security → Accessibility)
+- Set a wallpaper: `wal -i /path/to/wallpaper.jpg`
+- Run `reload-theme`
 
----
+## Usage
 
-## Pywal Theme Integration
-
-### Quick Start
 ```bash
-# Set wallpaper and generate colors
-wal -i /path/to/your/wallpaper.jpg
-
-# Reload borders and sketchybar with new colors
-reload-theme
-
-# Or do both at once
-reload-theme /path/to/your/wallpaper.jpg
+wal -i /path/to/wallpaper.jpg   # set wallpaper + generate colors
+reload-theme                     # reload borders and sketchybar
+reload-theme /path/to/image.jpg  # both at once
 ```
 
-### How It Works
-- **Pywal** analyzes your wallpaper and generates a color palette
-- **Borders** automatically uses colors from the palette:
-  - Active gradient: color6 → color4
-  - Inactive: Semi-transparent background color
-- **SketchyBar** applies pywal colors to the status bar
-- **reload-theme** script refreshes all components
+Pywal generates colors to `~/.cache/wal/colors.sh`. Borders reads color6/color4 for the gradient. SketchyBar picks up the rest.
 
-### Customization
-
-**Change which colors are used for borders:**
-Edit [bordersrc](bordersrc) and modify:
+To change which colors borders uses, edit `bordersrc`:
 ```bash
-active_color1=$(echo "$color6" | sed 's/#/0xff/')  # Change color6 to any color0-15
-active_color2=$(echo "$color4" | sed 's/#/0xff/')  # Change color4 to any color0-15
+active_color1=$(echo "$color6" | sed 's/#/0xff/')  # try color0-15
+active_color2=$(echo "$color4" | sed 's/#/0xff/')
 ```
 
-**Pywal color variables:**
-- `color0-7` - Main palette colors
-- `color8-15` - Bright variants
-- `background` - Background color
-- `foreground` - Foreground color
+## Files
 
-**See current colors:**
-```bash
-cat ~/.cache/wal/colors.sh
+```
+yabaduma-config/
+├── yabairc              # yabai config
+├── skhdrc               # skhd keybinds
+├── bordersrc            # borders config (sources pywal)
+├── reload-theme.py      # reloads borders + sketchybar
+├── scripts/             # helper scripts for skhd
+└── sketchybar/
+    ├── sketchybarrc     # main config
+    ├── colors.sh        # pywal color loader
+    └── plugins/         # bar widgets
 ```
 
-**Full installation guide in progress.**
+## Troubleshooting
+
+**Keybinds not working:** `skhd --restart-service`
+
+**Borders not using pywal colors:** Check `~/.cache/wal/colors.sh` exists, then `brew services restart borders`
+
+**Bluetooth shows N/A:** Install blueutil - `brew install blueutil`
+
+**Services acting up:** Restart everything:
+```bash
+brew services restart yabai skhd borders sketchybar
+```
+
+## Links
+
+- [Yabai Wiki](https://github.com/koekeishiya/yabai/wiki)
+- [SKHD](https://github.com/koekeishiya/skhd)
+- [SketchyBar](https://github.com/FelixKratz/SketchyBar)
+- [Pywal](https://github.com/dylanaraps/pywal)
