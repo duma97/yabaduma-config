@@ -7,17 +7,35 @@ Usage:
     reload-theme.py /path/to/wallpaper   # Set new wallpaper and reload
 """
 
-import sys
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 from typing import Optional
 
 
 class ThemeReloader:
-
     def __init__(self):
         self.home = Path.home()
-        self.wal_path = self.home / "Library" / "Python" / "3.9" / "bin" / "wal"
+        # Dynamically find wal in PATH, fallback to common locations
+        self.wal_path = self._find_wal()
+
+    def _find_wal(self) -> Path:
+        """Find pywal executable dynamically."""
+        # First try to find in PATH
+        wal_in_path = shutil.which("wal")
+        if wal_in_path:
+            return Path(wal_in_path)
+
+        # Fallback: search common Python installation paths
+        python_versions = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+        for version in python_versions:
+            candidate = self.home / "Library" / "Python" / version / "bin" / "wal"
+            if candidate.exists():
+                return candidate
+
+        # Last resort: return the 3.9 path (will error later if not found)
+        return self.home / "Library" / "Python" / "3.9" / "bin" / "wal"
 
     def set_wallpaper(self, wallpaper_path: str) -> bool:
         if not Path(wallpaper_path).exists():
@@ -30,7 +48,7 @@ class ThemeReloader:
                 [str(self.wal_path), "-i", wallpaper_path],
                 check=True,
                 capture_output=True,
-                text=True
+                text=True,
             )
             print("✓ Pywal colors generated")
             return True
@@ -48,7 +66,7 @@ class ThemeReloader:
                 ["brew", "services", "restart", "borders"],
                 check=True,
                 capture_output=True,
-                text=True
+                text=True,
             )
             print("✓ Borders reloaded")
             return True
@@ -59,9 +77,7 @@ class ThemeReloader:
     def reload_sketchybar(self) -> bool:
         try:
             result = subprocess.run(
-                ["pgrep", "-x", "sketchybar"],
-                capture_output=True,
-                text=True
+                ["pgrep", "-x", "sketchybar"], capture_output=True, text=True
             )
             if result.returncode != 0:
                 print("⊘ Sketchybar not running, skipping reload")
@@ -69,10 +85,7 @@ class ThemeReloader:
 
             print("Reloading sketchybar...")
             subprocess.run(
-                ["sketchybar", "--reload"],
-                check=True,
-                capture_output=True,
-                text=True
+                ["sketchybar", "--reload"], check=True, capture_output=True, text=True
             )
             print("✓ Sketchybar reloaded")
             return True
@@ -81,7 +94,6 @@ class ThemeReloader:
             return False
 
     def reload_all(self, wallpaper_path: Optional[str] = None) -> int:
-
         if wallpaper_path:
             if not self.set_wallpaper(wallpaper_path):
                 return 1

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if blueutil is installed
+if ! command -v blueutil &> /dev/null; then
+    sketchybar --set "$NAME" icon="󰂲" label="N/A"
+    exit 0
+fi
+
 # Get Bluetooth power status (1 = on, 0 = off)
 BT_POWER=$(blueutil -p)
 

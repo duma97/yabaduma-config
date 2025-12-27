@@ -1,8 +1,10 @@
 #!/bin/bash
 
+COLORS_FILE="${HOME}/.cache/wal/colors.sh"
+
 # Source pywal colors
-if [ -f "${HOME}/.cache/wal/colors.sh" ]; then
-    source "${HOME}/.cache/wal/colors.sh"
+if [ -f "$COLORS_FILE" ]; then
+    source "$COLORS_FILE"
 
     # Convert pywal colors to borders format (remove # and add 0xff prefix)
     active_color1=$(echo "$color6" | sed 's/#/0xff/')
@@ -19,6 +21,7 @@ if [ -f "${HOME}/.cache/wal/colors.sh" ]; then
     )
 else
     # Fallback to Gruvbox colors if pywal not found
+    echo "Warning: Pywal colors not found at $COLORS_FILE, using fallback colors" >&2
     options=(
         style=round
         width=3.0
