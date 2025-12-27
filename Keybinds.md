@@ -1,105 +1,62 @@
-# YabaDuma Keybinds
+# Keybinds
 
-Complete keyboard shortcut reference for the YabaDuma configuration.
-
----
-
-## Application Launchers
+## Apps
 
 | Keybind | Action |
 |---------|--------|
-| `Alt + Q` | Open Kitty terminal |
-| `Alt + C` | Open Visual Studio Code |
-| `Alt + S` | Open Spotify |
-| `Cmd + B` | Open Zen browser |
-| `Cmd + Return` | Open Finder |
+| Option + Q | Open Kitty terminal |
+| Option + C | Open Visual Studio Code |
+| Option + S | Open Spotify |
+| Cmd + B | Open Zen browser |
+| Cmd + Return | Open Finder |
 
----
-
-## Window Navigation
+## Window Focus
 
 | Keybind | Action |
 |---------|--------|
-| `Alt + ←` | Focus window to the left |
-| `Alt + →` | Focus window to the right |
-| `Alt + ↑` | Focus window above |
-| `Alt + ↓` | Focus window below |
+| Option + Arrow | Focus window in direction |
 
----
-
-## Window Movement / Swapping
+## Swap Windows
 
 | Keybind | Action |
 |---------|--------|
-| `Shift + Alt + ←` | Swap window left |
-| `Shift + Alt + →` | Swap window right |
-| `Shift + Alt + ↑` | Swap window up |
-| `Shift + Alt + ↓` | Swap window down |
+| Shift + Option + Arrow | Swap window in direction |
 
----
-
-## Window Resizing
+## Resize
 
 | Keybind | Action |
 |---------|--------|
-| `Ctrl + Alt + ←` | Shrink window width |
-| `Ctrl + Alt + →` | Expand window width |
-| `Ctrl + Alt + ↑` | Shrink window height |
-| `Ctrl + Alt + ↓` | Expand window height |
-
----
+| Ctrl + Option + Left/Right | Shrink/expand width |
+| Ctrl + Option + Up/Down | Shrink/expand height |
 
 ## Window State
 
 | Keybind | Action |
 |---------|--------|
-| `Ctrl + Z` | Toggle float (centered) |
-| `Shift + Alt + M` | Toggle fullscreen |
-| `Alt + O` | Toggle split orientation |
+| Ctrl + Z | Toggle float (centered) |
+| Shift + Option + M | Toggle fullscreen |
+| Option + O | Toggle split orientation |
 
----
-
-## Workspace Navigation
+## Move to Workspace
 
 | Keybind | Action |
 |---------|--------|
-| `Shift + Ctrl + ←` | Move window to previous workspace + follow |
-| `Shift + Ctrl + →` | Move window to next workspace + follow |
+| Shift + Ctrl + Left | Move window to prev workspace |
+| Shift + Ctrl + Right | Move window to next workspace |
 
----
-
-## Space Layout
+## Layout
 
 | Keybind | Action |
 |---------|--------|
-| `Ctrl + Alt + R` | Rotate windows counter-clockwise |
-| `Ctrl + Alt + Shift + R` | Rotate windows clockwise |
-| `Ctrl + Alt + B` | Balance all windows |
-| `Ctrl + Alt + 1` | Set BSP layout |
-| `Ctrl + Alt + 2` | Set Stack layout |
-| `Ctrl + Alt + 3` | Set Float layout |
+| Ctrl + Option + R | Rotate counter-clockwise |
+| Ctrl + Option + Shift + R | Rotate clockwise |
+| Ctrl + Option + B | Balance all windows |
+| Ctrl + Option + 1 | BSP layout |
+| Ctrl + Option + 2 | Stack layout |
+| Ctrl + Option + 3 | Float layout |
 
----
-
-## Service Management
+## Other
 
 | Keybind | Action |
 |---------|--------|
-| `Ctrl + Alt + Shift + 0` | Restart yabai |
-
----
-
-## Quick Reference
-
-### Modifier Keys
-- `Alt` (Option) - Primary modifier for window focus
-- `Shift + Alt` - Window movement/swapping
-- `Ctrl + Alt` - Window resizing and layout
-- `Cmd` - Application shortcuts
-
-### Arrow Keys
-All window operations use arrow keys for directional control:
-- `←` Left / West
-- `→` Right / East
-- `↑` Up / North
-- `↓` Down / South
+| Ctrl + Option + Shift + 0 | Restart yabai |
