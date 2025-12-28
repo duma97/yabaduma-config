@@ -37,10 +37,10 @@ alt - right : yabai -m window --focus east
 # ============================================
 
 # Smart swap (with split toggle fallback)
-shift + alt - left : ~/projects/yabaduma-config/scripts/smart-swap.sh west
-shift + alt - right : ~/projects/yabaduma-config/scripts/smart-swap.sh east
-shift + alt - up : ~/projects/yabaduma-config/scripts/smart-swap.sh north
-shift + alt - down : ~/projects/yabaduma-config/scripts/smart-swap.sh south
+shift + alt - left : ~/.config/skhd/scripts/smart-swap.sh west
+shift + alt - right : ~/.config/skhd/scripts/smart-swap.sh east
+shift + alt - up : ~/.config/skhd/scripts/smart-swap.sh north
+shift + alt - down : ~/.config/skhd/scripts/smart-swap.sh south
 
 # ============================================
 # Workspace Navigation
@@ -55,10 +55,10 @@ shift + ctrl - right : yabai -m window --space next; yabai -m space --focus next
 # ============================================
 
 # Resize windows using helper script
-ctrl + alt - left : ~/projects/yabaduma-config/scripts/resize-window.sh left
-ctrl + alt - down : ~/projects/yabaduma-config/scripts/resize-window.sh down
-ctrl + alt - up : ~/projects/yabaduma-config/scripts/resize-window.sh up
-ctrl + alt - right : ~/projects/yabaduma-config/scripts/resize-window.sh right
+ctrl + alt - left : ~/.config/skhd/scripts/resize-window.sh left
+ctrl + alt - down : ~/.config/skhd/scripts/resize-window.sh down
+ctrl + alt - up : ~/.config/skhd/scripts/resize-window.sh up
+ctrl + alt - right : ~/.config/skhd/scripts/resize-window.sh right
 
 # ============================================
 # Window State
