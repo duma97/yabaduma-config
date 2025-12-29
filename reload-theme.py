@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-Reload theme after pywal wallpaper change.
-
 Usage:
     reload-theme.py                      # Just reload current colors
     reload-theme.py /path/to/wallpaper   # Set new wallpaper and reload
@@ -21,21 +19,17 @@ class ThemeReloader:
         self.wal_path = self._find_wal()
 
     def _find_wal(self) -> Path:
-        """Find pywal executable dynamically."""
-        # First try to find in PATH
         wal_in_path = shutil.which("wal")
         if wal_in_path:
             return Path(wal_in_path)
 
-        # Fallback: search common Python installation paths
-        python_versions = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+        python_versions = ["3.14", "3.13", "3.12", "3.11", "3.10", "3.9"]
         for version in python_versions:
             candidate = self.home / "Library" / "Python" / version / "bin" / "wal"
             if candidate.exists():
                 return candidate
 
-        # Last resort: return the 3.9 path (will error later if not found)
-        return self.home / "Library" / "Python" / "3.9" / "bin" / "wal"
+        return self.home / "Library" / "Python" / "3.14" / "bin" / "wal"
 
     def set_wallpaper(self, wallpaper_path: str) -> bool:
         if not Path(wallpaper_path).exists():
@@ -45,7 +39,7 @@ class ThemeReloader:
         print(f"Setting wallpaper: {wallpaper_path}")
         try:
             subprocess.run(
-                [str(self.wal_path), "-i", wallpaper_path],
+                [str(self.wal_path), "-s", "-t", "-n", "-i", wallpaper_path],
                 check=True,
                 capture_output=True,
                 text=True,
@@ -103,7 +97,7 @@ class ThemeReloader:
 
         print("\n" + "=" * 40)
         if borders_ok or sketchybar_ok:
-            print("Theme reloaded successfully! 🎨")
+            print("Theme reloaded successfully!")
             return 0
         else:
             print("Theme reload completed with errors")
