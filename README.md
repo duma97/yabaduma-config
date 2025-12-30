@@ -77,6 +77,17 @@ After install:
 - Set a wallpaper: `wal -i /path/to/wallpaper.jpg`
 - Run `reload-theme`
 
+## Helper Scripts
+
+### Automated Install
+Instead of the manual steps above, you can run the installer script. It will check for dependencies, install packages, and symlink configs (backing up old ones).
+
+```bash
+./install.py
+```
+
+
+
 ## Usage
 
 ```bash

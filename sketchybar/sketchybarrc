@@ -112,17 +112,20 @@ sketchybar --add item clock right \
            --add item volume right \
            --set volume script="$PLUGIN_DIR/volume.sh" \
            --subscribe volume volume_change \
+           --add item wifi right \
+           --set wifi update_freq=5 script="$PLUGIN_DIR/wifi.py" padding_right=-15 \
+           --subscribe wifi wifi_change \
            --add item bluetooth right \
            --set bluetooth update_freq=5 script="$PLUGIN_DIR/bluetooth.sh" \
-                           padding_left=1 padding_right=2 \
+                           padding_left=1 padding_right=1 \
                            icon.padding_left=0 icon.padding_right=0 \
                            label.padding_left=0 label.padding_right=0 \
            --add item battery right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-                           icon.padding_left=8 \
+                           icon.padding_left=8 padding_right=5 \
            --subscribe battery system_woke power_source_change \
            \
-           --add bracket right_bracket clock volume bluetooth battery \
+           --add bracket right_bracket clock volume wifi bluetooth battery \
            --set right_bracket background.color="$ITEM_BG_COLOR" \
                                background.corner_radius=16 \
                                background.height=28 \
