@@ -9,7 +9,7 @@ MacOS tiling WM setup. Yabai + PyWal theming.
 - **Yabai** - tiling WM (BSP layout)
 - **SKHD** - keyboard shortcuts (see [Keybinds.md](Keybinds.md))
 - **JankyBorders** - window borders that pull colors from pywal
-- **SketchyBar** - status bar (workspaces, clock, volume, battery, bluetooth)
+- **SketchyBar** - status bar
 - **Pywal** - generates color scheme from your wallpaper
 
 Window opacity: active 1.0, inactive 0.9. No animations (macOS doesn't support it through yabai).
