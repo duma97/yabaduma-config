@@ -1,11 +1,4 @@
 #!/bin/bash
-# resize-window.sh - Resize windows in yabai
-#
-# Usage: resize-window.sh <direction>
-# Directions: left, right, up, down
-#
-# This script handles the complexity of resizing windows that may be
-# on either side of a split, trying both resize directions.
 
 DIRECTION="$1"
 
