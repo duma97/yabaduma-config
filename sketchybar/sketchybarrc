@@ -51,7 +51,7 @@ do
       script="$PLUGIN_DIR/space.sh"
       click_script="yabai -m space --focus $sid"
     )
-  elif [ "$sid" = "4" ]; then
+  elif [ "$sid" = "5" ]; then
     # Last workspace - more right padding
     space=(
       space="$sid"
