@@ -1,6 +1,6 @@
 # YabaDuma Config
 
-MacOS tiling WM setup with dynamic color theming. Built with Yabai, SketchyBar, and PyWal.
+MacOS tiling WM setup with dynamic color theming. Built with Yabai, SketchyBar, and PyWal. All scripts are Python-driven for maintainability.
 
 **Tested on MacBook Air M4, macOS 26.2 Tahoe.**
 
@@ -113,7 +113,7 @@ reload-theme                     # reload borders and sketchybar
 reload-theme /path/to/image.jpg  # both at once
 ```
 
-Pywal generates colors to `~/.cache/wal/colors.sh`. Borders reads color6/color4 for the gradient. SketchyBar picks up the rest.
+Pywal generates colors to `~/.cache/wal/colors.json`. SketchyBar plugins read colors via `colors.py`. Borders reads color6/color4 for the gradient.
 
 To change which colors borders uses, edit `bordersrc`:
 ```bash
@@ -125,7 +125,7 @@ active_color2=$(echo "$color4" | sed 's/#/0xff/')
 
 **Keybinds not working:** `skhd --restart-service`
 
-**Borders not using pywal colors:** Check `~/.cache/wal/colors.sh` exists, then `brew services restart borders`
+**Borders not using pywal colors:** Check `~/.cache/wal/colors.json` exists, then `brew services restart borders`
 
 **Bluetooth shows N/A:** Install blueutil - `brew install blueutil`
 
