@@ -3,7 +3,7 @@
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
 # Source pywal colors
-source "$CONFIG_DIR/colors.sh"
+eval "$("$CONFIG_DIR/colors.py")"
 
 # Bar Appearance
 
@@ -48,7 +48,7 @@ do
       background.corner_radius=0
       background.height=25
       label.drawing=off
-      script="$PLUGIN_DIR/space.sh"
+      script="$PLUGIN_DIR/space.py"
       click_script="yabai -m space --focus $sid"
     )
   elif [ "$sid" = "5" ]; then
@@ -62,7 +62,7 @@ do
       background.corner_radius=0
       background.height=25
       label.drawing=off
-      script="$PLUGIN_DIR/space.sh"
+      script="$PLUGIN_DIR/space.py"
       click_script="yabai -m space --focus $sid"
     )
   else
@@ -76,7 +76,7 @@ do
       background.corner_radius=0
       background.height=25
       label.drawing=off
-      script="$PLUGIN_DIR/space.sh"
+      script="$PLUGIN_DIR/space.py"
       click_script="yabai -m space --focus $sid"
     )
   fi
@@ -108,20 +108,20 @@ sketchybar --add bracket spaces_bracket "${SPACE_IDS[@]}" \
 # Right Part
 
 sketchybar --add item clock right \
-           --set clock update_freq=10 icon="" padding_left=-5 padding_right=10 script="$PLUGIN_DIR/clock.sh" \
+           --set clock update_freq=10 icon="" padding_left=-5 padding_right=10 script="$PLUGIN_DIR/clock.py" \
            --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --set volume script="$PLUGIN_DIR/volume.py" \
            --subscribe volume volume_change \
            --add item wifi right \
            --set wifi update_freq=5 script="$PLUGIN_DIR/wifi.py" padding_right=-15 \
            --subscribe wifi wifi_change \
            --add item bluetooth right \
-           --set bluetooth update_freq=5 script="$PLUGIN_DIR/bluetooth.sh" \
+           --set bluetooth update_freq=5 script="$PLUGIN_DIR/bluetooth.py" \
                            padding_left=1 padding_right=1 \
                            icon.padding_left=0 icon.padding_right=0 \
                            label.padding_left=0 label.padding_right=0 \
            --add item battery right \
-           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+           --set battery update_freq=120 script="$PLUGIN_DIR/battery.py" \
                            icon.padding_left=8 padding_right=5 \
            --subscribe battery system_woke power_source_change \
            \
