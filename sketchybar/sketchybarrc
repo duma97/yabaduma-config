@@ -29,16 +29,14 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7")
 SPACE_IDS=()
 for i in "${!SPACE_ICONS[@]}"
 do
   sid="$(($i+1))"
   SPACE_IDS+=("space.$sid")
 
-  # Set different padding for first and last workspace
   if [ "$sid" = "1" ]; then
-    # First workspace - more left padding
     space=(
       space="$sid"
       icon="${SPACE_ICONS[i]}"
@@ -52,7 +50,6 @@ do
       click_script="yabai -m space --focus $sid"
     )
   elif [ "$sid" = "5" ]; then
-    # Last workspace - more right padding
     space=(
       space="$sid"
       icon="${SPACE_ICONS[i]}"
@@ -66,7 +63,6 @@ do
       click_script="yabai -m space --focus $sid"
     )
   else
-    # Middle workspaces - normal padding
     space=(
       space="$sid"
       icon="${SPACE_ICONS[i]}"
@@ -83,6 +79,11 @@ do
 
   sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
 done
+
+# Hide spaces 6-7 on single display
+if [ "$(yabai -m query --displays | jq length)" -eq 1 ]; then
+  sketchybar --set space.6 drawing=off --set space.7 drawing=off
+fi
 
 sketchybar --add bracket spaces_bracket "${SPACE_IDS[@]}" \
            --set spaces_bracket background.color="$ITEM_BG_COLOR" \
