@@ -21,6 +21,14 @@ def log(msg):
     print(f"{BLUE}[INFO]{NC} {msg}")
 
 
+def ask(question, default=True):
+    hint = "[Y/n]" if default else "[y/N]"
+    answer = input(f"{BLUE}[?]{NC} {question} {hint} ").strip().lower()
+    if not answer:
+        return default
+    return answer in ("y", "yes")
+
+
 def success(msg):
     print(f"{GREEN}[SUCCESS]{NC} {msg}")
 
@@ -52,7 +60,7 @@ def check_cask(cask_name):
     return cask_name in result.stdout.split()
 
 
-def install_dependencies():
+def install_dependencies(install_sketchybar=True, install_borders=True):
     log("Checking prerequisites...")
     if not shutil.which("brew"):
         warn("Homebrew not found. Installing...")
@@ -65,16 +73,20 @@ def install_dependencies():
 
     log("Tapping repositories...")
     run_cmd_or_exit(["brew", "tap", "koekeishiya/formulae"])
-    run_cmd_or_exit(["brew", "tap", "FelixKratz/formulae"])
+    if install_sketchybar or install_borders:
+        run_cmd_or_exit(["brew", "tap", "FelixKratz/formulae"])
 
     packages = [
         "koekeishiya/formulae/yabai",
         "koekeishiya/formulae/skhd",
-        "FelixKratz/formulae/borders",
-        "FelixKratz/formulae/sketchybar",
         "blueutil",
         "jq",
     ]
+
+    if install_borders:
+        packages.append("FelixKratz/formulae/borders")
+    if install_sketchybar:
+        packages.append("FelixKratz/formulae/sketchybar")
 
     log("Installing dependencies...")
     for pkg in packages:
@@ -118,16 +130,20 @@ def backup_and_link(src, dest):
     success(f"Linked {src} -> {dest}")
 
 
-def setup_files():
+def setup_files(install_sketchybar=True, install_borders=True):
     log(f"Backing up existing configs to {BACKUP_DIR}...")
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
 
     backup_and_link(REPO_DIR / "yabairc", Path.home() / ".yabairc")
     backup_and_link(REPO_DIR / "skhdrc", Path.home() / ".skhdrc")
-    backup_and_link(
-        REPO_DIR / "bordersrc", Path.home() / ".config" / "borders" / "bordersrc"
-    )
-    backup_and_link(REPO_DIR / "sketchybar", Path.home() / ".config" / "sketchybar")
+
+    if install_borders:
+        backup_and_link(
+            REPO_DIR / "bordersrc", Path.home() / ".config" / "borders" / "bordersrc"
+        )
+    if install_sketchybar:
+        backup_and_link(REPO_DIR / "sketchybar", Path.home() / ".config" / "sketchybar")
+
     backup_and_link(REPO_DIR / "scripts", Path.home() / ".config" / "skhd" / "scripts")
 
     log("Setting up globally accessible scripts...")
@@ -146,13 +162,12 @@ def setup_files():
         print(f'export PATH="{local_bin}:$PATH"')
 
 
-def start_services():
+def start_services(install_sketchybar=True, install_borders=True):
     log("Starting services...")
 
     # yabai and skhd use their own service management (not brew services)
     for tool in ["yabai", "skhd"]:
         log(f"Starting {tool}...")
-        # Stop first if running, ignore errors
         run_cmd([tool, "--stop-service"])
         if run_cmd([tool, "--start-service"]):
             success(f"{tool} service started.")
@@ -163,7 +178,12 @@ def start_services():
             )
 
     # borders and sketchybar use brew services
-    brew_services = ["borders", "sketchybar"]
+    brew_services = []
+    if install_borders:
+        brew_services.append("borders")
+    if install_sketchybar:
+        brew_services.append("sketchybar")
+
     for service in brew_services:
         log(f"Starting {service}...")
         if run_cmd(["brew", "services", "restart", service]):
@@ -176,9 +196,17 @@ def start_services():
 
 def main():
     try:
-        install_dependencies()
-        setup_files()
-        start_services()
+        print("")
+        print("=== Yabaduma Config Installer ===")
+        print("")
+
+        install_sketchybar = ask("Install sketchybar (status bar)?", default=True)
+        install_borders = ask("Install borders (window borders)?", default=True)
+        print("")
+
+        install_dependencies(install_sketchybar, install_borders)
+        setup_files(install_sketchybar, install_borders)
+        start_services(install_sketchybar, install_borders)
 
         success("Installation complete!")
         print("")
