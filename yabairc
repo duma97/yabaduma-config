@@ -3,6 +3,9 @@
 sudo yabai --load-sa
 
 yabai -m config layout bsp
+yabai -m config auto_balance on
+yabai -m config split_ratio 0.5
+yabai -m config split_type auto
 
 yabai -m config top_padding    10
 yabai -m config bottom_padding 10
@@ -13,7 +16,7 @@ yabai -m config window_gap     10
 yabai -m config --space 5 top_padding 10
 yabai -m config --space 5 bottom_padding 24
 
-yabai -m config window_placement second_child
+yabai -m config window_placement first_child
 
 yabai -m config window_opacity on
 yabai -m config active_window_opacity 1.0
@@ -36,6 +39,19 @@ yabai -m rule --add title="Preferences$" manage=off
 yabai -m rule --add title="Settings$" manage=off
 
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Force horizontal split for 3rd+ window: toggle any new window that got vertical split
+yabai -m signal --add event=window_created action='
+  sleep 0.1
+  split=$(yabai -m query --windows --window $YABAI_WINDOW_ID 2>/dev/null | jq -r ".\"split-type\"")
+  if [ "$split" = "vertical" ]; then
+    sibling=$(yabai -m query --windows --window $YABAI_WINDOW_ID | jq -r ".\"split-child\"")
+    if [ "$sibling" = "second_child" ]; then
+      yabai -m window $YABAI_WINDOW_ID --toggle split
+    fi
+  fi
+'
+
 
 # Toggle spaces 6-7 visibility based on display count
 yabai -m signal --add event=display_added action='
