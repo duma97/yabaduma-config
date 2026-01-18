@@ -52,7 +52,6 @@ yabai -m signal --add event=window_created action='
   fi
 '
 
-
 # Toggle spaces 6-7 visibility based on display count
 yabai -m signal --add event=display_added action='
   sketchybar --set space.6 drawing=on --set space.7 drawing=on
